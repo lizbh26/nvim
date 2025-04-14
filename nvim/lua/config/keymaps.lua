@@ -5,12 +5,13 @@ local mapfnkey = require("util.keymapper").mapfunctionkey
 mapfnkey("J", ":m '>+1<CR>gv=gv", "v")
 mapfnkey("K", ":m '<-2<CR>gv=gv", "v")
 
--- Paste and delete without overriding register
+-- Paste, delete and change without overriding register
 mapfnkey("p", '"_dP', "x")
 mapfnkey("x", '"_x', { "n", "v" })
+mapfnkey("c", '"_c', { "n", "v" })
 
 -- Escape more easily from insert mode
-mapfnkey("<C-c>", "<Esc>", "i")
+mapfnkey("<A-q>", "<Esc>", "i")
 
 local function formatAndSave()
 	local efm = vim.lsp.get_clients({ name = "efm" })
@@ -18,7 +19,7 @@ local function formatAndSave()
 	if not vim.tbl_isempty(efm) then
 		vim.lsp.buf.format({ name = "efm", async = false })
 	else
-		vim.notify("Error: efm not found in LSP clients", 1)
+		vim.notify("No formatter set for this filetype", 4)
 	end
 
 	vim.cmd("w")
@@ -43,11 +44,7 @@ mapfnkey("<C-u>", "<C-u>zz", "n")
 -- Search navigation
 mapfnkey("n", "nzzzv", "n") -- Center screen when moving to next word
 mapfnkey("N", "Nzzzv", "n")
-mapvimkey("<leader>c", "nohlsearc", "n") -- Remove search highligh
-
--- Directory navigation
-mapvimkey("<leader>ef", "NvimTreeFocus", "n")
-mapvimkey("<leader>et", "NvimTreeToggle", "n")
+mapvimkey("<leader>ch", "nohlsearc", "n", { desc = "Clean search highlights" })
 
 -- Buffer Navigation
 mapvimkey("<leader>bn", "bnext", "n", { desc = "Switch to next buffer" })
@@ -64,10 +61,6 @@ mapvimkey("<C-h>", "wincmd h", "t") -- Navigate Left
 mapvimkey("<C-j>", "wincmd j", "t") -- Navigate Down
 mapvimkey("<C-k>", "wincmd k", "t") -- Navigate Up
 mapvimkey("<C-l>", "wincmd l", "t") -- Navigate Right
-mapvimkey("<C-h>", "TmuxNavigateLeft", "n") -- Navigate Left
-mapvimkey("<C-j>", "TmuxNavigateDown", "n") -- Navigate Down
-mapvimkey("<C-k>", "TmuxNavigateUp", "n") -- Navigate Up
-mapvimkey("<C-l>", "TmuxNavigateRight", "n") -- Navigate Right
 
 -- Window management
 mapvimkey("<leader>sv", "vsplit", "n", { desc = "Split vertically" })
@@ -78,8 +71,8 @@ mapfnkey("<leader>sq", "<C-w>q", "n", { desc = "Close window" })
 mapfnkey("<", "<gv", "v") -- Shift Indentation to Left
 mapfnkey(">", ">gv", "v") -- Shift Indentation to Right
 
-local api = vim.api
 -- Comments
+local api = vim.api
 if vim.env.TMUX ~= nil then
 	api.nvim_set_keymap("n", "<C-_>", "gtc", { noremap = false })
 	api.nvim_set_keymap("i", "<C-_>", "<Esc>gtcA", { noremap = false })

@@ -1,3 +1,5 @@
+local mapvimkey = require("util.keymapper").mapvimkey
+
 return {
 	"nvim-tree/nvim-tree.lua",
 	lazy = false,
@@ -11,5 +13,8 @@ return {
 				adaptive_size = true,
 			},
 		})
+
+		mapvimkey("<leader>ef", "NvimTreeFocus", "n")
+		mapvimkey("<leader>et", "NvimTreeToggle", "n")
 	end,
 }
