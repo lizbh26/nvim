@@ -1,0 +1,22 @@
+[window]
+opacity = 0.8
+decorations = "none"
+startup_mode = "Fullscreen"
+
+[font]
+
+[font.normal]
+    family = "Mononoki Nerd Font"
+    style = "ExtraLight"
+
+[font.bold]
+    family = "Mononoki Nerd Font"
+    style = "Light"
+
+  [font.italic] 
+    family = "Mononoki Nerd Font"
+    style = "Extra Light Italic"
+
+[font.bold_italic]
+    family = "Mononoki Nerd Font"
+    style = "Light Italic"
