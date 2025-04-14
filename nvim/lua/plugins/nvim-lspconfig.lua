@@ -52,7 +52,7 @@ local config = function()
 		filetypes = { "json", "jsonc" },
 	})
 
-    -- html
+	-- html
 	lspconfig.html.setup({
 		capabilities = capabilities,
 		on_attach = on_attach,
@@ -121,6 +121,12 @@ local config = function()
 		on_attach = on_attach,
 	})
 
+	-- go
+	lspconfig.gopls.setup({
+		capabilities = capabilities,
+		on_attach = on_attach,
+	})
+
 	-- C/C++
 	lspconfig.clangd.setup({
 		capabilities = capabilities,
@@ -150,6 +156,7 @@ local config = function()
 	local hadolint = require("efmls-configs.linters.hadolint")
 	local cpplint = require("efmls-configs.linters.cpplint")
 	local clangformat = require("efmls-configs.formatters.clang_format")
+	local goimports = require("efmls-configs.formatters.goimports")
 
 	-- configure efm server
 	lspconfig.efm.setup({
@@ -172,6 +179,7 @@ local config = function()
 			"css",
 			"c",
 			"cpp",
+			"go",
 		},
 		init_options = {
 			documentFormatting = true,
@@ -201,6 +209,7 @@ local config = function()
 				css = { prettier_d },
 				c = { clangformat, cpplint },
 				cpp = { clangformat, cpplint },
+				go = { goimports },
 			},
 		},
 	})
